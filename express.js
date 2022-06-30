@@ -14,8 +14,8 @@ class Contenedor {
     }
 
     getRandom() {
-        const data = this.getAll();
-        const random = Math.floor(Math.random() * datos.length);
+        const data = this.getAllProducts();
+        const random = Math.floor(Math.random() * data.length);
         return random;
     }
 }
@@ -33,14 +33,11 @@ function showProducts() {
     const data = contenedor1.getAllProducts();
 
     let info = "";
-    datos.forEach( p => {
+    data.forEach( p => {
     info += `
         <article class="product-item">
-        <h2>${producto.nombre}</h2>
-        <h3>$ ${producto.precio}</h3>
-        <picture>
-            <img class="product-img" src="${producto.imagen}" alt="${producto.nombre}" />
-        </picture>
+        <h2>${p.first_name} ${p.last_name}</h2>
+        <h3>${p.credit_card}</h3>
         </article>
     `;
     });
@@ -64,11 +61,8 @@ function showProducts() {
             flex-direction: column;
             align-items: center;
         }
-        .product-img {
-            width: 150px;
-        }
         </style>
-    <h1>Productos</h1>
+    <h1>Products</h1>
     <div class="container-products">
         ${info}
     </div>
@@ -80,17 +74,14 @@ app.get("/products", (req,res) => {
 });
 
 function randomProducts() {
-    const data = contenedor1.getAll();
+    const data = contenedor1.getAllProducts();
     const product = data[contenedor1.getRandom()];
 
     let info = `
     <article class="product-item">
-        <h2>${producto.nombre}</h2>
-        <h3>$ ${producto.precio}</h3>
-        <picture>
-            <img class="product-img" src="${producto.imagen}" alt="${producto.nombre}" />
-        </picture>
-        </article>
+        <h2>${product.first_name} ${product.last_name}</h2>
+        <h3>${product.credit_card}</h3>
+    </article>
     `;
 
     return `
@@ -110,12 +101,8 @@ function randomProducts() {
             flex-direction: column;
             align-items: center;
         }
-        .product-img {
-            min-width: 150px;
-            max-width: 250px;
-        }
         </style>
-    <h1>Producto Aleatorio</h1>
+    <h1>Random Product</h1>
     <div class="container-products">
         ${info}
     </div>
